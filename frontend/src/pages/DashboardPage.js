@@ -42,7 +42,7 @@ const DashboardPage = () => {
             day: 'numeric'
         });
     };
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         loadData();
     }, []);
