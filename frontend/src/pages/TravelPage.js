@@ -5,7 +5,6 @@ import Layout from '../components/common/Layout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Car, Navigation, Plus, Sparkles, Trash2 } from 'lucide-react';
 import taskService from '../services/taskService';
-import aiService from '../services/aiService';
 
 const TRAVEL_MODES = ['driving', 'walking', 'cycling', 'transit'];
 
@@ -96,7 +95,7 @@ const TravelPage = () => {
           date: today
         })
       });
-      const data = await res.json();
+      await res.json();
       setJournalText('');
       loadTravelTasks();
     } catch (err) {

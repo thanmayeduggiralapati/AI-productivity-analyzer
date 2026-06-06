@@ -72,6 +72,7 @@ const FocusPage = () => {
     }
   };
 
+  // eslint-disable-next-line
   const handleMusicChange = (music) => {
     setSelectedMusic(music);
     if (audioRef.current) {
