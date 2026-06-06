@@ -310,29 +310,30 @@ Rules:
 const solveDoubt = async (req, res) => {
     try {
         const { question, subject, context } = req.body;
+        console.log('Solving doubt:', question);
+        
         if (!question) {
             return sendError(res, 'Question is required', 400);
         }
         const prompt = `
-You are a helpful study assistant. Answer this doubt clearly.
-
-Subject: ${subject || 'General'}
-Question: "${question}"
-${context ? `Context: "${context}"` : ''}
-
-Provide a clear, educational answer with examples if needed.
-Use markdown formatting for better readability.
-`;
-
+        You are a helpful study assistant. Answer this doubt clearly.
+        Subject: ${subject || 'General'}
+        Question: "${question}"
+        ${context ? `Context: "${context}"` : ''}
+        
+        Provide a clear, educational answer with examples if needed.
+        Use markdown formatting for better readability.
+        `;
         const result = await model.generateContent(prompt);
+        console.log('Got response from Gemini');
         const response = result.response.text();
-
+        
         return sendSuccess(res, { answer: response }, 'Doubt solved');
     } catch (error) {
+        console.error('Solve doubt error:', error.message);
         return sendError(res, error.message, 500);
     }
 };
-
 module.exports = {
     extractTasksFromJournal,
     generateGoalRoadmap,
