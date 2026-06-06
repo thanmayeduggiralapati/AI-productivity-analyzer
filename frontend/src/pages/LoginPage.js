@@ -1,0 +1,167 @@
+// pages/LoginPage.js
+// Login page with clean design
+
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { Eye, EyeOff, Sparkles, Moon, Sun } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const LoginPage = () => {
+    const { login } = useAuth();
+    const { isDark, toggleTheme } = useTheme();
+    const navigate = useNavigate();
+
+    const [form, setForm] = useState({ email: '', password: '' });
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+        setError('');
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        try {
+            const user = await login(form.email, form.password);
+            if (user.onboardingDone) {
+                navigate('/dashboard');
+            } else {
+                navigate('/onboarding');
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || 'Login failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+    <div className={`min-h-screen flex items-center justify-center p-4 ${isDark ? 'bg-dark-bg' : 'bg-light-bg'}`}>
+
+        {/* Theme Toggle */}
+        <button
+            onClick={toggleTheme}
+            className={`
+                fixed top-4 right-4 p-2 rounded-lg
+                ${isDark ? 'bg-dark-card text-dark-muted' : 'bg-white text-light-muted'}
+                border ${isDark ? 'border-dark-border' : 'border-light-border'}
+            `}
+        >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
+        <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className={`
+            w-full max-w-md rounded-2xl p-8
+            ${isDark ? 'bg-dark-card border-dark-border' : 'bg-white border-light-border'}
+            border shadow-soft
+        `}
+    >
+        {/* Logo */}
+        <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-primary-400 flex items-center justify-center">
+                <Sparkles size={20} color="white" />
+            </div>
+        <div>
+            <h1 className={`text-lg font-bold ${isDark ? 'text-dark-text' : 'text-light-text'}`}>
+                Productivity Analyzer
+            </h1>
+            <p className={`text-xs ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
+                Your AI study companion
+            </p>
+        </div>
+        </div>
+
+        {/* Title */}
+        <h2 className={`text-2xl font-500 mb-1 ${isDark ? 'text-dark-text' : 'text-light-text'}`}>
+            Welcome back
+        </h2>
+        <p className={`text-sm mb-6 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
+            Sign in to continue your productivity journey
+        </p>
+
+        {/* Error */}
+        {error && (
+        <div className="bg-danger-50 text-danger-500 text-sm px-4 py-3 rounded-lg mb-4">
+            {error}
+        </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Email */}
+        <div>
+            <label className={`text-xs font-500 mb-1.5 block ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
+                Email
+            </label>
+            <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="input"
+                required
+            />
+        </div>
+
+          {/* Password */}
+        <div>
+            <label className={`text-xs font-500 mb-1.5 block ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
+                Password
+            </label>
+            <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                className="input pr-10"
+                required
+            />
+            <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}
+            >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+        </div>
+
+          {/* Submit */}
+        <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary w-full justify-center py-3 mt-2"
+        >
+            {loading ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : 'Sign In'}
+        </button>
+
+        </form>
+
+        {/* Register Link */}
+        <p className={`text-center text-sm mt-6 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
+            Don't have an account?{' '}
+            <Link to="/register" className="text-primary-400 hover:text-primary-500 font-500">
+            Create one
+            </Link>
+        </p>
+
+    </motion.div>
+    </div>
+);
+};
+
+export default LoginPage;
