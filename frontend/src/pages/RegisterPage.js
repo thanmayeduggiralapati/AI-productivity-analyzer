@@ -108,36 +108,30 @@ const RegisterPage = () => {
                     <label className={`text-xs font-500 mb-1.5 block ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
                         Full Name
                     </label>
-                    <div className="relative">
-                        <User size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`} />
-                        <input
-                        type="text"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        placeholder="Your full name"
-                        className="input pl-9"
-                        required
-                        />
-                    </div>
+                    <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Your full name"
+                    className="input"
+                    required
+                    />
                 </div>
                 {/* Email */}
                 <div>
                     <label className={`text-xs font-500 mb-1.5 block ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
                         Email
                     </label>
-                    <div className="relative">
-                        <Mail size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`} />
-                        <input
-                        type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="you@example.com"
-                        className="input pl-9"
-                        required
-                        />
-                    </div>
+                    <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    className="input"
+                    required
+                    />
                 </div>
                 {/* Password */}
                 <div>
@@ -145,14 +139,13 @@ const RegisterPage = () => {
                         Password
                     </label>
                     <div className="relative">
-                        <Lock size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`} />
                         <input
                         type={showPassword ? 'text' : 'password'}
                         name="password"
                         value={form.password}
                         onChange={handleChange}
                         placeholder="Min 6 characters"
-                        className="input pl-9 pr-10"
+                        className="input pr-10"
                         required
                         />
                         <button
@@ -169,18 +162,15 @@ const RegisterPage = () => {
                     <label className={`text-xs font-500 mb-1.5 block ${isDark ? 'text-dark-muted' : 'text-light-muted'}`}>
                         Confirm Password
                     </label>
-                    <div className="relative">
-                        <Lock size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-dark-muted' : 'text-light-muted'}`} />
-                        <input
-                        type={showPassword ? 'text' : 'password'}
-                        name="confirmPassword"
-                        value={form.confirmPassword}
-                        onChange={handleChange}
-                        placeholder="Repeat your password"
-                        className="input pl-9"
-                        required
-                        />
-                    </div>
+                    <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={form.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Repeat your password"
+                    className="input"
+                    required
+                    />
                 </div>
                 {/* Submit */}
                 <button
