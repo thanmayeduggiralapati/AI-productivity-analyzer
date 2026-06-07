@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Mail, Lock, Eye, EyeOff, User, Sparkles, Moon, Sun } from 'lucide-react';
+import { Eye, EyeOff, Sparkles, Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const RegisterPage = () => {
